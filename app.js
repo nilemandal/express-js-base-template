@@ -7,8 +7,14 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
 
-app.get('/' , (req,res)=>{
-    console.log('Hello Nile');
+const path = require('path')
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+const logger = (req,res,next) =>{
+    console.log('Request hit at' , new Date());
+    next()
+}
+app.get('/' , logger, (req,res)=>{
     res.send('Hello world');
 })
 
