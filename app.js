@@ -50,7 +50,21 @@ connection.connect(error => {
     })
 });
 
-app.get('/get-db-data' , async (req,res)=>{
+var MongoClient = require('mongodb').MongoClient
+var db;
+MongoClient.connect('mongodb://localhost:27017', function (err, client) {
+  if (err) throw err
+  db = client.db('test_db')
+})
+
+app.get('/get-db-data-mongo', async (req,res)=>{
+    db.collection('test_collection').find().toArray(function (err, result) {
+        if (err) throw err;
+        return res.send({status:'success',data:result });
+    })
+})
+
+app.get('/get-db-data-mysql' , async (req,res)=>{
     connection.query('SELECT * FROM test_table', (err, rows, fields)=>{
         if (err) throw err
 
@@ -58,3 +72,4 @@ app.get('/get-db-data' , async (req,res)=>{
         else return res.send({status:'error'});
     })
 });
+
