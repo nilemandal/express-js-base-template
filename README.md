@@ -1,8 +1,6 @@
 # express-js-base-template
 
-Install NodeJS
-Install MySql
-Install MongoDB
+Install NodeJS, MySql, MongoDB
 
 npm install
 
